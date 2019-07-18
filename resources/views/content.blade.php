@@ -1,42 +1,66 @@
-@if($slider)
-<section id="main-slider" class="no-margin">
-        <div class="carousel slide">
-            <ol class="carousel-indicators">
-                <li data-target="#main-slider" data-slide-to="0" class="active"></li>
-                <li data-target="#main-slider" data-slide-to="1"></li>
-                <li data-target="#main-slider" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                @foreach($slider as $item)
-                <div class="item {{ ($item->id == 17) ? 'active' : '' }}" style="background-image: url(assets/images/slider/{{ $item->images }})">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="carousel-content">
-                                    <h1 class="animation animated-item-1">{{ $item->title }}</h1>
-                                    <div class="animation animated-item-2">
-                                       {{ $item->text }}
-                                    </div>
-                                    <a class="btn-slide animation animated-item-3" href="{{ route('articles.show',['article'=>$item->id]) }}">Learn More</a>
-                                    <!-- <a class="btn-slide white animation animated-item-3" href="#">Get Started</a> -->
-                                </div>
-                            </div>
+@if($portfolios)
+ <section id="recent-works">
+      <div class="container">
+          <div class="center fadeInDown">
+              <h2>{{ Lang::get('ru.recent_works') }}</h2>
+              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+          </div>
 
+          <div class="row">    
+             @foreach($portfolios as $portfolio)
+				<div class="col-xs-12 col-sm-6 col-md-4 single-work">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="assets/images/{{ $portfolio->images }}" alt="">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <a class="preview" href="assets/images/{{ $portfolio->images }}" rel="prettyPhoto"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>	
+             @endforeach
+           </div>
+           <!--/.row-->
+            <div class="clearfix text-center">
+               <br>
+               <br>
+               <a href="{{ route('portfolios') }}" class="btn btn-primary">Show More</a>
+            </div>
+        </div>
+        <!--/.container-->
+ </section>
+    <!--/#recent-works-->
+@endif
+
+<!-- Start Service -->
+@if($services)
+<section id="services" class="service-item">
+        <div class="container">
+            <div class="center fadeInDown">
+                <h2>{{ Lang::get('ru.our_service') }}</h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+
+            <div class="row">
+			  @foreach($services as $service)
+                <div class="col-sm-6 col-md-4">
+                    <div class="media services-wrap fadeInDown">
+                        <div class="pull-left">
+                            <img class="img-responsive" src="assets/images/{{ $service->icon }}">
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">{{ $service->title }}</h3>
+                            <p>{{ $service->description }}</p>
                         </div>
                     </div>
                 </div>
-                @endforeach
-                <!--/.item-->               
+              @endforeach
             </div>
-            <!--/.carousel-inner-->
+            <!--/.row-->
         </div>
-        <!--/.carousel-->
-        <a class="prev hidden-xs hidden-sm" href="#main-slider" data-slide="prev">
-            <i class="fa fa-chevron-left"></i>
-        </a>
-        <a class="next hidden-xs hidden-sm" href="#main-slider" data-slide="next">
-            <i class="fa fa-chevron-right"></i>
-        </a>
+        <!--/.container-->
     </section>
-    <!--/#main-slider-->
+    <!--/#services-->
 @endif
+
+<!-- End Service -->

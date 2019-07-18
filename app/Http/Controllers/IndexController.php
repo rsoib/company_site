@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Blog;
+use App\Feature;
+use App\Portfolio;
+use App\Service;
 
 class IndexController extends SiteController
 {
@@ -17,13 +19,32 @@ class IndexController extends SiteController
 
     	$this->vars = array();
 
-    	$slider = $this->getSlider();
+        $this->title = 'Home';
 
-    	$this->title = 'Home';
+        /* get articles for slider */ 
 
-    	$this->content = view("content")->with('slider',$slider)->render();
+    	$sliderItems = $this->getSlider();
+        $slider = view("slider")->with('slider',$sliderItems)->render();
+        $this->vars = array_add($this->vars,'slider',$slider);
+
+        /* get features */
+
+        $featureItems = $this->getFeatures();
+
+        $featureView = view("features")->with('feature',$featureItems)->render();
+        $this->vars = array_add($this->vars,'features',$featureView);
+
+        /* get portfolios for content */
+    	
+        $portfolios = $this->getPortfolios();
+
+         /* get Services for content */
+
+        $services = $this->getServices();
+
+
+        $this->content = view("content")->with(['portfolios'=>$portfolios,'services'=>$services])->render();
     	$this->vars = array_add($this->vars,'content',$this->content);
-
 
     	return $this->renderOutput();
     }
@@ -32,5 +53,23 @@ class IndexController extends SiteController
 
     	$slider = Blog::orderBy('id','desc')->limit(3)->get();
     	return $slider;
+    }
+
+    public function getFeatures()
+    {
+        $features = Feature::limit(4)->get();
+        return $features;
+    }
+
+    public function getPortfolios(){
+
+        $portfolios = Portfolio::all();
+        return $portfolios;
+    }
+
+    public function getServices(){
+
+        $services = Service::limit(6)->get();
+        return $services;
     }
 }

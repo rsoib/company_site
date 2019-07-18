@@ -32,14 +32,20 @@
 <body class="homepage">
 
     <!-- header -->
-		
 		@yield('navigation')
-
     <!-- /header -->
 	
-	<!-- content -->
-		@yield('content')
-	<!-- /content -->
+	<!-- slider -->
+		@yield('slider')
+    <!-- /slider -->
+    
+    <!-- features -->
+        @yield('features')
+    <!-- /features -->
+
+    <!-- content -->
+        @yield('content')
+    <!-- /content -->
    
     <!-- footer -->
 		@yield('footer')

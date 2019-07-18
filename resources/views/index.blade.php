@@ -6,6 +6,18 @@
 
 @endsection
 
+@section('slider')	
+	
+	{!! $slider !!}
+
+@endsection
+
+@section('features')	
+	
+	{!! $features !!}
+
+@endsection
+
 @section('content')	
 	
 	{!! $content !!}
