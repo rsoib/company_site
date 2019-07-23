@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Menus;
 use Menu;
+use App\Skill;
+use App\Service;
+use App\Partner;
 
 class SiteController extends Controller
 {
 
-	protected $a_rep;
+	/*protected $a_rep;
     protected $m_rep;
     protected $f_rep;
     protected $port_rep;
     protected $s_rep;
     protected $skil_rep;
-    protected $partners_rep;
+    protected $partners_rep;*/
 
 
     protected $keywords;
@@ -49,14 +52,16 @@ class SiteController extends Controller
         $this->vars = array_add($this->vars,'navigation', $navigation);
 
 
-
-        $footer = view("footer")->render();
+        $m_footer = Menus::limit(3)->get();
+        $footer = view("footer")->with('m_footer',$m_footer)->render();
         $this->vars = array_add($this->vars,'footer', $footer);    	
 
         return view($this->template)->with($this->vars);
 
     }
 
+
+    // Get menu
 
     public function getMenu()
     {
@@ -88,4 +93,32 @@ class SiteController extends Controller
         return $mBuilder;
     }
 
+
+    // Get Skills
+
+     public function getSkills(){
+
+        $skills = Skill::limit(4)->get();
+
+        return $skills;
+    }
+
+    // Get Services
+
+    public function getServices($limit = FALSE){
+
+        if ($limit) {
+            $services = Service::limit($limit)->get();
+        }else{
+            $services = Service::limit(6)->get();
+        }
+        return $services;
+    }
+
+    // Get Partners
+    public function getPartners(){
+
+        $partners = Partner::limit(5)->get();
+        return $partners;
+    }
 }

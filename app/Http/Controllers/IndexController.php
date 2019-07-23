@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Blog;
 use App\Feature;
 use App\Portfolio;
-use App\Service;
 
 class IndexController extends SiteController
 {
@@ -42,8 +41,21 @@ class IndexController extends SiteController
 
         $services = $this->getServices();
 
+        /* get Skills for content */
 
-        $this->content = view("content")->with(['portfolios'=>$portfolios,'services'=>$services])->render();
+        $skills = $this->getSkills();
+
+        /* get Partners for content */
+        $partners = $this->getPartners();
+
+
+        $this->content = view("content")->with(['portfolios'=>$portfolios,
+                                                'services'=>$services,
+                                                'skills' => $skills,
+                                                'partners' => $partners
+                                                ])->render();
+
+        
     	$this->vars = array_add($this->vars,'content',$this->content);
 
     	return $this->renderOutput();
@@ -67,9 +79,4 @@ class IndexController extends SiteController
         return $portfolios;
     }
 
-    public function getServices(){
-
-        $services = Service::limit(6)->get();
-        return $services;
-    }
 }
