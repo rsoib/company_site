@@ -10,7 +10,7 @@ class AboutController extends SiteController
 
 	public function __construct(){
 
-    	$this->template = "about/about_view";
+    	$this->template = "about.about_view";
     }
     
 	public function index(){
