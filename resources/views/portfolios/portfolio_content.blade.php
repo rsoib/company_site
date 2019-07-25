@@ -6,7 +6,7 @@
     <section id="portfolio">
         <div class="container">
             <div class="center">
-                <h2>Recent work</h2>
+                <h2>{{ Lang::get('ru.recent_works') }}</h2>
                 <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
 

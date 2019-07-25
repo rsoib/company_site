@@ -16,7 +16,7 @@ class IndexController extends SiteController
 
     public function index(){
 
-    	$this->vars = array();
+    	//$this->vars = array();
 
         $this->title = 'Home';
 
@@ -75,7 +75,7 @@ class IndexController extends SiteController
 
     public function getPortfolios(){
 
-        $portfolios = Portfolio::all();
+        $portfolios = Portfolio::limit(6)->get();
         return $portfolios;
     }
 
