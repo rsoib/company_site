@@ -43,7 +43,7 @@ jQuery(function ($) {
     });
 
     // Contact form
-    var form = $('#main-contact-form');
+   /* var form = $('#main-contact-form');
     form.submit(function (event) {
         event.preventDefault();
         var form_status = $('<div class="form_status"></div>');
@@ -56,7 +56,7 @@ jQuery(function ($) {
         }).done(function (data) {
             form_status.html('<p class="text-success">' + data.message + '</p>').delay(3000).fadeOut();
         });
-    });
+    });*/
 
     $('.testimonial-slider').owlCarousel({
         margin: 30,

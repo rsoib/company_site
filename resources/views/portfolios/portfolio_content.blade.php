@@ -1,6 +1,6 @@
 @if($portfolios)
 <div class="page-title" style="background-image: url(assets/images/page-title.png)">
-        <h1>Portfolio</h1>
+        <h1>{{ Lang::get('ru.portfolio') }}</h1>
     </div>
     
     <section id="portfolio">

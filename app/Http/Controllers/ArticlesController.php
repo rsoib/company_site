@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Blog;
+use App\Category;
+use Config;
 
 class ArticlesController extends SiteController
 {
@@ -15,14 +17,32 @@ class ArticlesController extends SiteController
 
 
 
-    public function index()
+    public function index($cat_alias = FALSE)
     {
        // $this->vars = array();
         $this->title = 'Блог';
 
-        $articles = $this->getArticles();
+        // get Articles
+        $articles = $this->getArticles($cat_alias);
 
-        $this->content = view('articles.articles_content')->with('articles',$articles);
+        // get categoties
+
+        $categories = $this->getCategories();
+
+        // get popular articles
+
+        $popularArticles = $this->getPopularArticles();
+
+        // rightbar
+
+        $this->contentRightBar = view('articles.rightBar')->with(['articles'=>$articles,
+                                                                  'categories'=>$categories,
+                                                                  'popularArticles'=>$popularArticles
+                                                                ])->render();
+
+        
+
+        $this->content = view('articles.articles_content')->with('articles',$articles)->render();
         $this->vars = array_add($this->vars,'content',$this->content);
 
         return $this->renderOutput();
@@ -31,8 +51,36 @@ class ArticlesController extends SiteController
 
     public function getArticles($cat_alias = FALSE)
     {
-        $articles = Blog::all();
+        $where = FALSE;
+        //Получим статьи по Категориям
+        if ($cat_alias) {
+            
+            $id = Category::select('id')->where('cat_alias',$cat_alias)->first()->id;
+            $where = ['category_id',$id];
+
+        }
+        
+        if ($where) {
+            
+            $articles = Blog::where($where[0],$where[1])->paginate(Config::get('settings.paginate'));
+        }else{
+            $articles = Blog::paginate(Config::get('settings.paginate'));
+        }
+        
+        //
         return $articles;
+    }
+
+    public function getCategories()
+    {
+        $categories = Category::all();
+        return $categories;
+    }
+
+    public function getPopularArticles()
+    {
+        $popularArticles = Blog::where('popular',1)->limit(Config::get('settings.recent_popular_articles'))->orderBy('id','desc')->get();
+        return $popularArticles;
     }
 
     /**
@@ -62,9 +110,39 @@ class ArticlesController extends SiteController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($alias)
     {
-        //
+
+        $article = Blog::where('alias',$alias)->first();
+        
+        
+
+        $this->title = $article->title;
+
+         // get categoties
+
+        $categories = $this->getCategories();
+
+        // get popular articles
+
+        $popularArticles = $this->getPopularArticles();
+
+        // rightbar
+
+        $this->contentRightBar = view('articles.rightBar')->with(['categories'=>$categories,
+                                                                  'popularArticles'=>$popularArticles
+                                                                ])->render();
+
+        
+        $this->content = view('articles.article_show')->with('article',$article)->render();
+
+        $this->vars = array_add($this->vars,'content',$this->content);
+
+        return $this->renderOutput();
+       
+
+
+
     }
 
     /**

@@ -23,6 +23,8 @@ class IndexController extends SiteController
         /* get articles for slider */ 
 
     	$sliderItems = $this->getSlider();
+
+        //dd($sliderItems);
         $slider = view("slider")->with('slider',$sliderItems)->render();
         $this->vars = array_add($this->vars,'slider',$slider);
 

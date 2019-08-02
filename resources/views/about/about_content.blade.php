@@ -1,5 +1,5 @@
 <div class="page-title" style="background-image: url(assets/images/page-title.png)">
-        <h1>About us</h1>
+        <h1>{{ Lang::get('ru.about_us') }}</h1>
     </div>
 
     <section id="about-us">

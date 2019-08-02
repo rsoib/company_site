@@ -52,6 +52,14 @@ class SiteController extends Controller
         $this->vars = array_add($this->vars,'navigation', $navigation);
 
 
+        if ($this->contentRightBar) {
+            
+            $rightBar = $this->contentRightBar;
+
+            $this->vars = array_add($this->vars,'rightBar', $rightBar);
+        }
+
+
         $m_footer = Menus::limit(3)->get();
         $footer = view("footer")->with('m_footer',$m_footer)->render();
         $this->vars = array_add($this->vars,'footer', $footer);    	
@@ -66,6 +74,7 @@ class SiteController extends Controller
     public function getMenu()
     {
         $menus = Menus::all();
+        //dd($menus);
 
         $mBuilder = Menu::make('MyNav', function($m) use ($menus) {
 
@@ -74,14 +83,15 @@ class SiteController extends Controller
 
                 if ($item->parent == 0) {
                     
-                    $m->add($item->title, $item->path)->id($item->id); 
+
+                    $m->add($item->title, $item->path)->active()->id($item->id); 
 
 
                 }else{
 
                     if($m->find($item->parent)){
 
-                        $m->find($item->parent)->add($item->title, $item->path)->id($item->id);
+                        $m->find($item->parent)->add($item->title, $item->path)->active('')->id($item->id);
 
                      }
                 } 

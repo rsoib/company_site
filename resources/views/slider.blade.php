@@ -8,7 +8,7 @@
             </ol>
             <div class="carousel-inner">
                 @foreach($slider as $item)
-                <div class="item {{ ($item->id == 17) ? 'active' : '' }}" style="background-image: url(assets/images/slider/{{ $item->images }})">
+                <div class="item {{ ($item->id == 16) ? 'active' : '' }}" style="background-image: url(assets/images/slider/{{ $item->images }})">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-7">

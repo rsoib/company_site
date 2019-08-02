@@ -40,3 +40,4 @@ Route::get('/articles/cat/{cat_alias?}',['uses'=>'ArticlesController@index','as'
 
 
 Route::get('contacts/',['uses'=>'ContactController@index','as'=>'contacts']);
+Route::post('contacts/',['uses'=>'ContactController@store','as'=>'contactsStore']);

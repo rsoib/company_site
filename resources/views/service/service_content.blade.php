@@ -1,5 +1,5 @@
  <div class="page-title" style="background-image: url(assets/images/page-title.png)">
-        <h1>Services</h1>
+        <h1>{{ Lang::get('ru.services') }}</h1>
  </div>
     
 @if($services)
