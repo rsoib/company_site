@@ -41,3 +41,48 @@ Route::get('/articles/cat/{cat_alias?}',['uses'=>'ArticlesController@index','as'
 
 Route::get('contacts/',['uses'=>'ContactController@index','as'=>'contacts']);
 Route::post('contacts/',['uses'=>'ContactController@store','as'=>'contactsStore']);
+
+
+// Auth routes
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// Admin routes
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function()
+{
+	Route::get('/',['uses' => 'Admin\IndexController@index','as' => 'adminIndex']);
+
+	Route::resource('/adminMenus','Admin\MenusController');
+
+	Route::resource('/adminSkills','Admin\SkillsController');
+
+	Route::resource('/adminServices','Admin\ServicesController');
+
+	Route::resource('/adminPortfolios','Admin\PortfoliosController');
+
+	Route::resource('/adminBlog','Admin\BlogController',[
+
+													'parameters'=> [
+
+														'alias'=>'alias'
+
+													]
+
+														]);
+
+	Route::resource('/users','Admin\UsersController',[
+
+													'parameters'=> [
+
+														'users'=>'users'
+
+													]
+
+														]);
+
+
+
+});

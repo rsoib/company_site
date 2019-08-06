@@ -18,7 +18,15 @@
 		'about_us' => 'Про нас',
 		'portfolio' => 'Портфолио',
 		'blog' => 'Блог',
-		'contact_us' => 'Свяжитесь с нами'
+		'contact_us' => 'Свяжитесь с нами',
+		
+		'admin_panel' => 'Панель администратора',
+		'admission' => 'Вход',
+		'login' => 'Логин',
+		'password' => 'Пароль',
+		'remember_me' => 'Запомнить',
+		'logout' => 'Выход',
+		'menusItem' => 'Пунты меню'
 
 
 		

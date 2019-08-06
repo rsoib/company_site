@@ -9,6 +9,7 @@
     <title>{{ (isset($title)) ? $title: 'Theme'  }}</title>
 
     <!-- core CSS -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/animate.min.css') }}" rel="stylesheet">
@@ -17,6 +18,7 @@
     <link href="{{ asset('assets/css/icomoon.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -29,27 +31,17 @@
 </head>
 <!--/head-->
 
-<body class="homepage" style=" {{ (Route::currentRouteName() == 'contacts') ? 'background-color: #F5F5F5' : '' }}">
+<body>
 
     <!-- header -->
 		@yield('navigation')
     <!-- /header -->
 	
-	<!-- slider -->
-		@yield('slider')
-    <!-- /slider -->
-    
-    <!-- features -->
-        @yield('features')
-    <!-- /features -->
-
     <!-- content -->
         @yield('content')
+
     <!-- /content -->
-        @yield('bar')
-    <!-- footer -->
-		@yield('footer')
-    <!-- /footer -->
+
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>

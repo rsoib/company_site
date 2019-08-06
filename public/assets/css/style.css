@@ -1,0 +1,17 @@
+.adminUl{
+    list-style-type: none;
+}
+
+li>a:hover{
+	color: #F8B600;
+}
+
+.dropdown-item:hover{
+	
+	color: black; 
+}
+.dropdown-item
+{
+	
+	margin-left: 10px;
+}

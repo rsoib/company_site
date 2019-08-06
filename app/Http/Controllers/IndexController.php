@@ -18,7 +18,7 @@ class IndexController extends SiteController
 
     	//$this->vars = array();
 
-        $this->title = 'Home';
+        $this->title = 'Главная';
 
         /* get articles for slider */ 
 
