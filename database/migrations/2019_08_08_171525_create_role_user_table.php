@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangePersonalsTable extends Migration
+class CreateRoleUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class ChangePersonalsTable extends Migration
      */
     public function up()
     {
-        Schema::table('personals', function (Blueprint $table) {
-            $table->string('images')->after('contacts');
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class ChangePersonalsTable extends Migration
      */
     public function down()
     {
-        Schema::table('personals', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('role_user');
     }
 }

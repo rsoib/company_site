@@ -1,6 +1,8 @@
-<?php 
-	
+<?php
+
 	return [
+
+		// front end
 
 		'features' => 'Характеристи',
 		'recent_works' => 'Последние работы',
@@ -19,17 +21,31 @@
 		'portfolio' => 'Портфолио',
 		'blog' => 'Блог',
 		'contact_us' => 'Свяжитесь с нами',
-		
+
+		// admin Panel
 		'admin_panel' => 'Панель администратора',
 		'admission' => 'Вход',
 		'login' => 'Логин',
 		'password' => 'Пароль',
 		'remember_me' => 'Запомнить',
 		'logout' => 'Выход',
-		'menusItem' => 'Пунты меню'
+
+		//menu
+
+		'menusItem' => 'Пунты меню',
+		'add_menu' => 'Новый пункт меню',
+		'success_addMenu' => 'Новый пункт меню успешно добавлен!',
+		'success_editMenu' => 'Меню успешно обновлено!',
+		'success_deleteMenu' => 'Меню успешно удалено!',
+
+        //skills
+
+        'skills' => 'Технологии',
+        'skill_update' => 'Успешно обновлено!'
+
+        
 
 
-		
 	];
 
 

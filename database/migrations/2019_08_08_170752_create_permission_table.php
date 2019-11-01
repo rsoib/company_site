@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangePartnersTable extends Migration
+class CreatePermissionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class ChangePartnersTable extends Migration
      */
     public function up()
     {
-        Schema::table('partners', function (Blueprint $table) {
-            
-            $table->string('comp_url',255)->after('icon');
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +27,6 @@ class ChangePartnersTable extends Migration
      */
     public function down()
     {
-        Schema::table('partners', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('permission');
     }
 }

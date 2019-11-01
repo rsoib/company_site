@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Menus;
 use Menu;
+use Gate;
+use Lang;
+
+
 class MenusController extends AdminController
 {
 
@@ -17,6 +21,11 @@ class MenusController extends AdminController
 
     public function index()
     {
+
+        if (Gate::denies('VIEW_ADMIN_MENU')) {
+            abort(403);
+        }
+
         $this->title = 'Пункты меню';
 
         $menus = $this->getAdminMenu();
@@ -28,7 +37,7 @@ class MenusController extends AdminController
     }
 
 
-    public function getAdminMenu()
+    public function getAdminMenu($parent = false)
     {
         $menus = Menus::all();
         //dd($menus);
@@ -36,12 +45,12 @@ class MenusController extends AdminController
         $mBuilder = Menu::make('MyNav', function($m) use ($menus) {
 
             foreach ($menus as $item) {
-                
+
 
                 if ($item->parent == 0) {
-                    
 
-                    $m->add($item->title, $item->path)->active()->id($item->id); 
+
+                    $m->add($item->title, $item->path)->active()->id($item->id);
 
 
                 }else{
@@ -51,7 +60,7 @@ class MenusController extends AdminController
                         $m->find($item->parent)->add($item->title, $item->path)->active('')->id($item->id);
 
                      }
-                } 
+                }
             }
 
         });
@@ -70,7 +79,32 @@ class MenusController extends AdminController
      */
     public function create()
     {
-        //
+
+        $this->title = 'Новый пункт меню';
+
+        $tmp = $this->getAdminMenu()->roots();
+
+
+         /*  ПОЛУЧАЕМ МЕНЮ
+
+            Метод reduce() уменьшает коллекцию к одному значению, передавая
+            результат каждой итерации в последующей итерации:
+            В каестве второго параметра указываем значение для первого итерации
+        */
+
+        $menus = $tmp->reduce(function($returnMenus, $menu){
+
+            $returnMenus[$menu->id] = $menu->title;
+            return $returnMenus;
+
+
+        },['0' => 'Родительский пункт меню']);
+
+
+        $this->content = view('admin.menu.menu_add')->with('menus',$menus)->render();
+        $this->vars = array_add($this->vars,'content',$this->content);
+
+        return $this->renderOutput();
     }
 
     /**
@@ -81,7 +115,20 @@ class MenusController extends AdminController
      */
     public function store(Request $request)
     {
-        //
+
+        $data = $request->except('_token');
+
+
+        $menu = new Menus();
+
+        $menu->fill($data);
+
+
+        if ($menu->save())
+        {
+            return redirect('admin/adminMenus')->with('status',Lang::get('ru.success_addMenu'));
+        }
+
     }
 
     /**
@@ -92,7 +139,7 @@ class MenusController extends AdminController
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -103,7 +150,38 @@ class MenusController extends AdminController
      */
     public function edit($id)
     {
-        //
+        if (Gate::denies('VIEW_ADMIN_MENU')) {
+            abort(403);
+        }
+
+
+        $menu = Menus::find($id);
+
+        $this->title = 'Редактрование - '.$menu->title;
+
+        $tmp = $this->getAdminMenu()->roots();
+
+
+         /*  ПОЛУЧАЕМ МЕНЮ
+
+            Метод reduce() уменьшает коллекцию к одному значению, передавая
+            результат каждой итерации в последующей итерации:
+            В каестве второго параметра указываем значение для первого итерации
+        */
+
+        $menus = $tmp->reduce(function($returnMenus, $menu){
+
+            $returnMenus[$menu->id] = $menu->title;
+            return $returnMenus;
+
+
+        },['0' => 'Родительский пункт меню']);
+
+
+        $this->content = view('admin.menu.menu_add')->with(['menus'=>$menus,'menu'=>$menu])->render();
+        $this->vars = array_add($this->vars,'content',$this->content);
+
+        return $this->renderOutput();
     }
 
     /**
@@ -115,7 +193,17 @@ class MenusController extends AdminController
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token');
+
+        $menu = Menus::find($id);
+
+        $menu->fill($data);
+
+
+        if ($menu->update())
+        {
+            return redirect('admin/adminMenus')->with('status',Lang::get('ru.success_editMenu'));
+        }
     }
 
     /**
@@ -126,6 +214,11 @@ class MenusController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $menu = Menus::find($id);
+
+        if ($menu->delete())
+        {
+            return redirect('admin/adminMenus')->with('status',Lang::get('ru.success_deleteMenu'));
+        }
     }
 }

@@ -29,10 +29,11 @@ class AdminController extends Controller
 
     public function renderOutput()
     {
-        
+
         $this->vars = array_add($this->vars,'title',$this->title);
 
         $menus = $this->getMenu();
+
 
         $navigation = view('admin.navigation')->with('menus',$menus)->render();
 
@@ -46,11 +47,11 @@ class AdminController extends Controller
         return Menu::make('adminMenu',function($menu){
 
             $menu->add('Меню',array('route' => 'adminMenus.index'));
-            $menu->add('Харкатеристика',array('route' => 'home'));
-            $menu->add('Технологии',array('route' => 'home'));
-            $menu->add('Сервиси',array('route' => 'home'));
-            $menu->add('Портфолио',array('route' => 'home'));
-            $menu->add('Блог',array('route' => 'home'));
+           // $menu->add('Харкатеристика',array('route' => 'adminMenus.index'));
+            $menu->add('Технологии',array('route' => 'adminSkills.index'));
+            $menu->add('Сервиси',array('route' => 'adminServices.index'));
+            $menu->add('Портфолио',array('route' => 'adminPortfolios.index'));
+            $menu->add('Блог',array('route' => 'adminBlog.index'));
             $menu->add('Партнеры',array('route' => 'home'));
             $menu->add('Пользователи',array('route' => 'home'));
            // $menu->add('Привилегии',array('route' => 'home'));

@@ -8,6 +8,7 @@ use Menu;
 use App\Skill;
 use App\Service;
 use App\Partner;
+use Config;
 
 class SiteController extends Controller
 {
@@ -40,20 +41,20 @@ class SiteController extends Controller
 
 
     public function renderOutput(){
-        
+
         $menu = $this->getMenu();
 
         $this->vars = array_add($this->vars,'keywords', $this->keywords);
         $this->vars = array_add($this->vars,'meta_desc', $this->meta_desc);
-        $this->vars = array_add($this->vars,'title', $this->title);    
+        $this->vars = array_add($this->vars,'title', $this->title);
 
-        
+
         $navigation = view("navigation")->with('menu',$menu)->render();
         $this->vars = array_add($this->vars,'navigation', $navigation);
 
 
         if ($this->contentRightBar) {
-            
+
             $rightBar = $this->contentRightBar;
 
             $this->vars = array_add($this->vars,'rightBar', $rightBar);
@@ -62,7 +63,7 @@ class SiteController extends Controller
 
         $m_footer = Menus::limit(3)->get();
         $footer = view("footer")->with('m_footer',$m_footer)->render();
-        $this->vars = array_add($this->vars,'footer', $footer);    	
+        $this->vars = array_add($this->vars,'footer', $footer);
 
         return view($this->template)->with($this->vars);
 
@@ -79,12 +80,12 @@ class SiteController extends Controller
         $mBuilder = Menu::make('MyNav', function($m) use ($menus) {
 
             foreach ($menus as $item) {
-                
+
 
                 if ($item->parent == 0) {
-                    
 
-                    $m->add($item->title, $item->path)->active()->id($item->id); 
+
+                    $m->add($item->title, $item->path)->active()->id($item->id);
 
 
                 }else{
@@ -94,7 +95,7 @@ class SiteController extends Controller
                         $m->find($item->parent)->add($item->title, $item->path)->active('')->id($item->id);
 
                      }
-                } 
+                }
             }
 
         });
@@ -108,7 +109,7 @@ class SiteController extends Controller
 
      public function getSkills(){
 
-        $skills = Skill::limit(4)->get();
+        $skills = Skill::limit(Config::get('settings.skill_limit'))->get();
 
         return $skills;
     }

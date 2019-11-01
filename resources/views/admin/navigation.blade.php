@@ -67,7 +67,7 @@
 
                 </div>
 
-                <div class="collapse navbar-collapse navbar-right">
+                <div class="collapse navbar-collapse navbar-left" style="margin-left: 60px;">
                     {!! $menus->asUl(['class'=>'nav navbar-nav']) !!}
                 </div>
             </div>

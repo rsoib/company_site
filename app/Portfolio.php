@@ -12,4 +12,7 @@ class Portfolio extends Model
         
         return $this->belongsTo('App\Filter');
     }
+
+    protected $fillable = ['title','images','filter_id'];
+
 }

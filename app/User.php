@@ -10,11 +10,18 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    
+
 
     public function articles(){
-        
+
         return $this->hasMany('App\Blog');
+    }
+
+
+    public function roles(){
+
+        return $this->belongsToMany('App\Role','role_user');
+
     }
 
 
@@ -41,4 +48,36 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+     public function canDo($permission, $require = FALSE){
+
+        if (is_array($permission)) {
+
+            foreach ($permission as $permName) {
+
+                  $permName = $this->canDo($permName);
+                //Если один правил из массива будет совпадат
+                  if ($permName && !$require) {
+                        return TRUE;
+                   }
+                // Если ни один из правил нету
+                   elseif (!$permName && $require) {
+                       return FALSE;
+                   }
+            }
+
+            return $require;
+
+        }else{
+            foreach ($this->roles as $role) {
+                 foreach ($role->perms as $perm) {
+                     if (str_is($permission,$perm->name)) {
+                         return TRUE;
+                     }
+                 }
+             }
+        }
+
+    }
 }
